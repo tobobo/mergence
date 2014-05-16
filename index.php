@@ -16,7 +16,11 @@ if (!empty($_GET['d'])) {
 	if (count($receivedData)) {
 
 		// write it out to the data file
-
+		if (!file_exists('data')) {
+			$data = fopen('data', 'w');
+			fwrite($data, '');
+			fclose($data);
+		}
 		$datafile = fopen('data', 'r');
 		$temp = fopen('tempdata','w');
 
@@ -54,8 +58,13 @@ if (!empty($_GET['d'])) {
 	    }
 	}
 
-	
+
 } else if (!empty($_GET['c'])) {
+	if (!file_exists('clients')) {
+		$clients = fopen('clients', 'w');
+		fwrite($clients, '');
+		fclose($clients);
+	}
 	$clients = fopen('clients','r');
 	$temp = fopen('tempclients','w');
 
@@ -78,7 +87,7 @@ if (!empty($_GET['d'])) {
 
 	fclose($temp);
 	fclose($clients);
-	
+
 	if (!copy('tempclients','clients')) {
 		die('error');
 	} else {
@@ -87,6 +96,11 @@ if (!empty($_GET['d'])) {
 	}
 
 } else {
+	if (!file_exists('clients')) {
+		$clients = fopen('clients', 'w');
+		fwrite($clients, '');
+		fclose($clients);
+	}
 	$clients = fopen('clients','r');
 
 	if (!empty($_GET['uid'])) {
@@ -117,7 +131,7 @@ if (!empty($_GET['d'])) {
 		        	fwrite($temp, $thisUid.','.$userTime.$newline);
 		        }
 	        }
-	        
+
 	    }
 
 	    if ($isNew) {
@@ -241,7 +255,7 @@ if (!$render) {
 		theUid = <?php echo $uid ?>;
 
 		console.log('uid: ' + theUid);
-		
+
 		$(function() {
 			init();
 		});
@@ -261,14 +275,14 @@ if (!$render) {
 				if (top === self) {
 					flash('.please', 9000);
 				}
-			
+
 
 			}
 
 			flash('.info', 7000);
-			
-			
-			
+
+
+
 			setInterval(function() { update(); }, 500);
 		}
 
@@ -316,7 +330,7 @@ if (!$render) {
 				},
 				success: function(theData) {
 					if (theData == 1) {
-						console.log('pinged server');			
+						console.log('pinged server');
 					} else {
 						console.log('ping failed');
 						console.log(theData);
@@ -337,8 +351,8 @@ if (!$render) {
 							latestTimestamp = thisData[0];
 							getProcFunc(thisData, 2);
 						}
-						
-						
+
+
 					}
 				}
 
@@ -386,7 +400,7 @@ if (!$render) {
 			}
 
 			setTimeout(function() { updateFreq() }, 1);
-			
+
 		}
 
 		function bgColor(color) {
@@ -414,7 +428,7 @@ if (!$render) {
 				console.log('gain: ' + data[i])
 				return i;
 			}
-			
+
 		}
 
 		function proc_freq(data, i) {
@@ -424,7 +438,7 @@ if (!$render) {
 				console.log('freq: ' + data[i]);
 				return i;
 			}
-			
+
 		}
 
 		function proc_sched(data, i) {
@@ -473,7 +487,7 @@ if (!$render) {
 
 		}
 
-		
+
 
 
 

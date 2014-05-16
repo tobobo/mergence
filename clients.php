@@ -1,4 +1,9 @@
 <?php
+if (!file_exists('clients')) {
+	$clients = fopen('clients', 'w');
+	fwrite($clients, '');
+	fclose($clients);
+}
 $clients = fopen('clients','r');
 $temp = fopen('tempclients','w');
 
@@ -13,7 +18,7 @@ while (($buffer = fgets($clients)) !== false) {
 		$clientstr .= $thisClient[0].' ';
 		fwrite($temp, $buffer);
 	}
-	
+
 	if (!copy('tempclients','clients')) {
 		die('0');
 	} else {

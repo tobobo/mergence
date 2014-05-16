@@ -17,6 +17,7 @@ if (!empty($_GET['d'])) {
 
 		// write it out to the data file
 
+
 		$datafile = fopen('data', 'r');
 		$temp = fopen('tempdata','w');
 
@@ -54,7 +55,7 @@ if (!empty($_GET['d'])) {
 	    }
 	}
 
-	
+
 } else if (!empty($_GET['c'])) {
 	$clients = fopen('clients','r');
 	$temp = fopen('tempclients','w');
@@ -78,7 +79,7 @@ if (!empty($_GET['d'])) {
 
 	fclose($temp);
 	fclose($clients);
-	
+
 	if (!copy('tempclients','clients')) {
 		die('error');
 	} else {
@@ -87,6 +88,11 @@ if (!empty($_GET['d'])) {
 	}
 
 } else {
+	if (!file_exists('clients')) {
+		$clients = fopen('clients', 'w');
+		fwrite($clients, '');
+		fclose($clients);
+	}
 	$clients = fopen('clients','r');
 
 	if (!empty($_GET['uid'])) {
@@ -117,7 +123,7 @@ if (!empty($_GET['d'])) {
 		        	fwrite($temp, $thisUid.','.$userTime.$newline);
 		        }
 	        }
-	        
+
 	    }
 
 	    if ($isNew) {
@@ -248,14 +254,14 @@ if (!$render) {
 		theUid = <?php echo $uid ?>;
 
 		console.log('uid: ' + theUid);
-		
+
 		$(function() {
 			init();
 		});
 
 
 		function init() {
-			
+
 			setInterval(function() { update(); }, 500);
 		}
 
@@ -287,12 +293,12 @@ if (!$render) {
 														latestTimestamp = thisData[0];
 														getProcFunc(thisData, 2);
 													}
-													
-													
+
+
 												}
 											}
 
-										});						
+										});
 						}
 					}
 				}
@@ -338,13 +344,13 @@ if (!$render) {
 
 		function proc_gain(data, client, i) {
 			return i
-			
+
 		}
 
 		function proc_freq(data, client, i) {
 			$('#client-' + client).html(data[i]);
 			return i;
-			
+
 		}
 
 		function proc_sched(data, client, i) {
@@ -375,7 +381,7 @@ if (!$render) {
 
 		}
 
-		
+
 
 
 
