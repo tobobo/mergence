@@ -233,7 +233,7 @@ if (!$render) {
 	</style>
 </head>
 <body>
-	<div class="info">this website is the location of a an experimental composition. the next scheduled performance is friday, may 10th at about 10:55 PM EDT.</div>
+	<!--<div class="info">this website is the location of a an experimental composition. the next scheduled performance is friday, may 10th at about 10:55 PM EDT.</div>-->
 	<div class="please">please turn up your sound</div>
 	<div class="thanks">thank you</div>
 
