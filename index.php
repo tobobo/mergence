@@ -239,7 +239,6 @@ if (!$render) {
 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<script type="text/javascript">
-		var hasAudio = typeof(webkitAudioContext) === "function";
 		var context;
 		var oscillator;
 		var lowOsc;
@@ -255,6 +254,15 @@ if (!$render) {
 		theUid = <?php echo $uid ?>;
 
 		console.log('uid: ' + theUid);
+
+		function ac() {
+			Context = window.AudioContext || window.webkitAudioContext;
+			if (Context) {
+				return new Context();
+			}
+		}
+
+		var hasAudio = typeof(ac()) === "object";
 
 		$(function() {
 			init();
@@ -285,10 +293,9 @@ if (!$render) {
 
 			setInterval(function() { update(); }, 500);
 		}
-
 		function initWKA() {
-			context = new webkitAudioContext(),
-	    	oscillator = context.createOscillator();
+			context = ac();
+    	oscillator = context.createOscillator();
 
 			oscillator.type = 0;
 			oscillator.frequency.value = 220;
@@ -316,6 +323,10 @@ if (!$render) {
 			updateFreq();
 			oscillator.noteOn(0);
 			lowOsc.noteOn(0);
+
+			window.ontouchstart = function() {
+				oscillator.noteOn(0);
+			}
 		}
 
 		function update() {
