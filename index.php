@@ -245,6 +245,8 @@ if (!$render) {
 		var squareGain;
 		var gainNode;
 
+		hasTouch = ('ontouchstart' in document.documentElement);
+
 		schedule = Array();
 
 		d = (new Date()).getTime();
@@ -280,8 +282,12 @@ if (!$render) {
 			if (hasAudio) {
 				initWKA();
 
-				if (top === self) {
-					flash('.please', 9000);
+				if (hasTouch) {
+					$('.please').append('<br>and tap your screen to begin').addClass('active');
+				} else {
+					if (top === self) {
+						flash('.please', 9000);
+					}
 				}
 
 
@@ -301,15 +307,14 @@ if (!$render) {
 			oscillator.frequency.value = 220;
 			oscillator.baseFreq = 220;
 
+    	lowOsc = context.createOscillator();
+    	lowOsc.type = 1;
+    	lowOsc.frequency.value = 110;
+    	lowOsc.baseFreq = 110;
 
-	    	lowOsc = context.createOscillator();
-	    	lowOsc.type = 1;
-	    	lowOsc.frequency.value = 110;
-	    	lowOsc.baseFreq = 110;
-
-	    	squareGain = context.createGain();
-	    	lowOsc.connect(squareGain);
-	    	squareGain.gain.value = 0.48;
+    	squareGain = context.createGain();
+    	lowOsc.connect(squareGain);
+    	squareGain.gain.value = 0.48;
 
 			// Create a gain node.
 			gainNode = context.createGain();
@@ -323,9 +328,12 @@ if (!$render) {
 			updateFreq();
 			oscillator.noteOn(0);
 			lowOsc.noteOn(0);
-
-			window.ontouchstart = function() {
-				oscillator.noteOn(0);
+			if (hasTouch) {
+				window.ontouchstart = function() {
+					oscillator.noteOn(0);
+					lowOsc.noteOn(0);
+					$('.please').removeClass('active');
+				}
 			}
 		}
 
