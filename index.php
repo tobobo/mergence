@@ -326,8 +326,8 @@ if (!$render) {
 			gainNode.gain.value = 0.0;
 
 			updateFreq();
-			oscillator.noteOn(0);
-			lowOsc.noteOn(0);
+			oscillator.start(0);
+			lowOsc.start(0);
 			if (hasTouch) {
 				window.ontouchstart = function() {
 					oscillator.start(0);
