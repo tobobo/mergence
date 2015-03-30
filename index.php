@@ -303,12 +303,12 @@ if (!$render) {
 			context = ac();
     	oscillator = context.createOscillator();
 
-			oscillator.type = 0;
+			oscillator.type = 'sine';
 			oscillator.frequency.value = 220;
 			oscillator.baseFreq = 220;
 
     	lowOsc = context.createOscillator();
-    	lowOsc.type = 1;
+    	lowOsc.type = 'square';
     	lowOsc.frequency.value = 110;
     	lowOsc.baseFreq = 110;
 
@@ -330,8 +330,8 @@ if (!$render) {
 			lowOsc.noteOn(0);
 			if (hasTouch) {
 				window.ontouchstart = function() {
-					oscillator.noteOn(0);
-					lowOsc.noteOn(0);
+					oscillator.start(0);
+					lowOsc.start(0);
 					$('.please').removeClass('active');
 				}
 			}
