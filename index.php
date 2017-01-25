@@ -330,9 +330,9 @@ if (!$render) {
 			lowOsc.start(0);
 			if (hasTouch) {
 				window.ontouchstart = function() {
+					$('.please').removeClass('active');
 					oscillator.start(0);
 					lowOsc.start(0);
-					$('.please').removeClass('active');
 				}
 			}
 		}
