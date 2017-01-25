@@ -328,12 +328,10 @@ if (!$render) {
 			updateFreq();
 			oscillator.start(0);
 			lowOsc.start(0);
-			if (hasTouch) {
-				window.ontouchstart = function() {
-					$('.please').removeClass('active');
-					oscillator.start(0);
-					lowOsc.start(0);
-				}
+			window.ontouchstart = window.onclick = function() {
+				$('.please').removeClass('active');
+				oscillator.start(0);
+				lowOsc.start(0);
 			}
 		}
 
