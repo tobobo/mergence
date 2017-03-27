@@ -238,12 +238,15 @@ if (!$render) {
 	<div class="thanks">thank you</div>
 
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="NoSleep.min.js"></script>
 	<script type="text/javascript">
 		var context;
 		var oscillator;
 		var lowOsc;
 		var squareGain;
 		var gainNode;
+		var noSleep = new NoSleep();
+		var noSleepEnabled = false;
 
 		hasTouch = ('ontouchstart' in document.documentElement);
 
@@ -330,6 +333,10 @@ if (!$render) {
 			lowOsc.start(0);
 			window.ontouchstart = window.onclick = function() {
 				$('.please').removeClass('active');
+				if (!noSleepEnabled) {
+					noSleep.enable();
+					noSleepEnabled = true;
+				}
 				oscillator.start(0);
 				lowOsc.start(0);
 			}
